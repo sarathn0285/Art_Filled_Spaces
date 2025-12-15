@@ -1,1 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OH CHRIST</title>
+  <style>
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
 
+    /* Page background so the 1200px panel is clearly centered */
+    body{
+      display:flex;
+      align-items:flex-start; /* align top since panel is full-height */
+      justify-content:center; /* center horizontally */
+      min-height:100vh;
+      background:linear-gradient(180deg,#111 0%,#222 100%);
+      font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:#fff;
+    }
+
+    /* The centered panel */
+    .panel{
+      width:1200px;              /* requested fixed width */
+      height:100vh;             /* full viewport height */
+      position:relative;
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+      display:flex;
+      align-items:stretch;
+      justify-content:stretch;
+      background-color:#000; /* fallback color */
+      background-position:center;
+      background-size:cover;
+      background-repeat:no-repeat;
+    }
+
+    /* grid that sits above the background image */
+    .grid{
+      position:relative; /* sit on top of background */
+      z-index:2;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      grid-template-rows:repeat(4,1fr);
+      width:100%;
+      height:100%;
+    }
+
+    /* each cell covers area and is transparent but shows hover state */
+    .cell{
+      position:relative;
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:background 180ms ease, transform 160ms ease;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .cell:hover{
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.15));
+      transform:scale(1.01);
+    }
+
+    /* subtle label to indicate volume for demo */
+    .label{
+      pointer-events:none;
+      background:rgba(0,0,0,0.45);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:13px;
+      color:#fff;
+      backdrop-filter:blur(4px);
+    }
+
+    /* overlay to darken the image so labels are readable */
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.45));
+      z-index:1;
+      pointer-events:none;
+    }
+
+    /* helper caption bottom-left */
+    .caption{
+      position:absolute;
+      left:12px;
+      bottom:12px;
+      z-index:3;
+      font-size:13px;
+      color:rgba(255,255,255,0.85);
+      background:rgba(0,0,0,0.35);
+      padding:8px 10px;
+      border-radius:6px;
+      pointer-events:none;
+    }
+
+    /* make the audio controls invisible but accessible for debugging */
+    audio{display:none}
+
+    /* responsive: if the viewport is narrower than 1200px, scale the panel to fit */
+    @media (max-width:1200px){
+      .panel{width:100%;border-radius:0}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Panel with a background image. Replace url(...) with your own image path. -->
+  <div id="panel" class="panel" style="background-image:url('emZine72.png');">
+
+    <!-- semi-transparent overlay for contrast -->
+    <div class="overlay" aria-hidden="true"></div>
+
+    <!-- 3x3 interactive grid -->
+    <div class="grid" id="grid" role="application" aria-label="volume grid">
+      <!-- 9 cells injected by JS for clarity -->
+    </div>
+
+    <div class="caption">Hover a cell to change the audio volume</div>
+
+    <!-- Hidden audio element. Replace the src with your mp3 file. -->
+    <audio id="player" src="migrant.mp3" loop preload="auto"></audio>
+  </div>
+
+  <script>
+    // Volume map (row-major): nine values between 0.0 and 1.0.
+    // You can change these to whatever mapping you like. Here it increases left->right, top->bottom.
+    const volumeMap = [
+      0.05, 0.10, 0.15, 0.2,
+      0.25, 0.3, 0.35, 0.4,
+      0.45, 0.5, 0.55, 0.6,
+      0.65, 0.7, 0.8, 1.0
+    ];
+
+    const grid = document.getElementById('grid');
+    const audio = document.getElementById('player');
+
+    // create 16 cells
+    for (let i = 0; i < 16; i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.index = i;
+
+      // visible label showing percentage (helpful for development/demo)
+      const lbl = document.createElement('div');
+      lbl.className = 'label';
+      const pct = Math.round(volumeMap[i] * 100);
+      lbl.textContent = pct + '%';
+      cell.appendChild(lbl);
+
+      grid.appendChild(cell);
+    }
+
+    // Fade helper: smoothly transition audio.volume to target over duration (ms)
+    let fadeAnim = null;
+    function fadeVolume(target, duration = 180){
+      if (fadeAnim) cancelAnimationFrame(fadeAnim.id);
+      const start = performance.now();
+      const from = audio.volume;
+      const diff = target - from;
+      if (duration <= 0){ audio.volume = Math.max(0, Math.min(1, target)); return; }
+
+      function step(now){
+        const t = Math.min(1, (now - start) / duration);
+        audio.volume = Math.max(0, Math.min(1, from + diff * t));
+        if (t < 1){
+          fadeAnim = {id: requestAnimationFrame(step)};
+        } else {
+          fadeAnim = null;
+        }
+      }
+      fadeAnim = {id: requestAnimationFrame(step)};
+    }
+
+    // Try to play on first user gesture to satisfy autoplay policies
+    let started = false;
+    function ensurePlaying(){
+      if (started) return;
+      // Many browsers allow audio.play() after a user gesture (mouseenter is one).
+      audio.volume = 0; // start at 0
+      audio.play().then(()=>{
+        started = true;
+      }).catch((err)=>{
+        // if play() is blocked, we'll still attempt to set volume on hover which
+        // should be allowed because it is directly triggered by a user action.
+        console.warn('Autoplay blocked or unavailable:', err);
+      });
+    }
+
+    // pointer enter / leave behavior
+    grid.addEventListener('pointerenter', (e) => {
+      // no-op: handled per-cell
+    });
+
+    grid.addEventListener('pointerover', (e) => {
+      const cell = e.target.closest('.cell');
+      if (!cell || !grid.contains(cell)) return;
+      const idx = Number(cell.dataset.index);
+      const vol = volumeMap[idx] ?? 0;
+      ensurePlaying();
+      // set target volume using fade
+      fadeVolume(vol, 220);
+    });
+
+    // when leaving a cell into another cell, pointerover above handles new target
+    // when pointer leaves the grid entirely, drop volume to 0
+    grid.addEventListener('pointerleave', (e) => {
+      // fade back to 0 so audio doesn't abruptly stop
+      fadeVolume(0, 220);
+    });
+
+    // accessibility: allow keyboard focus on cells to change volume
+    grid.querySelectorAll('.cell').forEach((c)=>{
+      c.tabIndex = 0;
+      c.addEventListener('focus', ()=>{
+        const idx = Number(c.dataset.index);
+        fadeVolume(volumeMap[idx] ?? 0, 220);
+        ensurePlaying();
+      });
+      c.addEventListener('blur', ()=> fadeVolume(0,220));
+    });
+
+    // If you want, you can change the background dynamically, for example:
+    // document.getElementById('panel').style.backgroundImage = "url('images/your-image.jpg')";
+
+    // End of script
+  </script>
+</body>
+</html>
