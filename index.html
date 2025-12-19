@@ -1,57 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  
-  <head> 
-    <title>Silentea's Creative Repo</title>
-    <meta name="description" content="Works Created in Fall 2025 Hunter's IMA 750 class" />
- </head>
-  
- <body style= "background-color:rosybrown;" >
-   <h1 style="text-align:center;">Fall 2025 Creative Portfolio</h1>
-   <h2 style="text-align:center;">Meet The Artist</h2>
-   <h3 style="text-align:center;">S.N.T</h3> 
-   <p>
-     Sarath is whimsical. She likes weird things like worm farms and edamame. She plays with lots of different art forms, her favorites being ceramics and mokuhanga. She's worked in dark rooms, in the woods, with fire, with vintage cameras, in swimming pools, in moving cars, and even in her own home. A native New Yorker as well as a black, queer, woman; Sarath has used her street knowledge and her Dominican heritage to create projects that delve into all of the things she cares about. Explore at your own risk.
-   </p>
-
-<style>
-.mycontainer {
-  display: flex;
-}
-.mycontainer > div {
-  width:33%;
-}
-</style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>christ-is-here</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<h1>Choose Your Own Adventure</h1>
+  <div id="art-container">
+    <img src="emzine.png" alt="Artwork">
 
-<div class="mycontainer">
-
-  <div style="background-color:rosybrown;">
-   <h2><a href="blogpostss.html">Blog Posts</a></h2> </section>
-    <p>All of my thoughts in one place</p>
-  </div>
-  
-  <div style="background-color:rosybrown;">
-    <h2><a href="phase1.html">Phase 1</a></h2> </section>
-    <p>Visual Essay</p>
-  </div>
-  
-  <div style="background-color:rosybrown;">
-    <h2><a href="phase2.html">Phase 2</a></h2> </section>
-    <p>Print Zine</p>
-  </div>
-  
-   <div style="background-color:rosybrown;">
-    <h2><a href="phase3.html">Phase 3</a></h2> </section>
-    <p>Animation</p>
-  </div>
-
+<div id="interaction-hint">
+  sound lives in the image, hover to hear what’s hidden
 </div>
 
-  
- </body>
-  
+    <!-- PRAYERS (top center, top loud -> bottom quiet) -->
+    <div id="prayers-zone" class="sound-zone"
+         data-audio="audio/prayers.mp3"
+         data-direction="vertical"
+         data-vertical="tb">
+      <div class="prayers prayers-1">prayers</div>
+      <div class="prayers prayers-2">prayers</div>
+      <div class="prayers prayers-3">prayers</div>
+    </div>
+
+    <!-- THE -->
+    <div id="the-zone" class="sound-zone"
+         data-audio="audio/the.mp3"
+         data-direction="horizontal"
+         data-horizontal="lr">
+      <div class="the the-1">the</div>
+      <div class="the the-2">the</div>
+      <div class="the the-3">the</div>
+    </div>
+
+    <!-- LISTENING -->
+    <div id="listening-zone" class="sound-zone"
+         data-audio="audio/listening.mp3"
+         data-direction="vertical">
+      <div class="listening listening-1">listening</div>
+      <div class="listening listening-2">listening</div>
+      <div class="listening listening-3">listening</div>
+    </div>
+
+    <!-- RESIST -->
+    <div id="resist-zone" class="sound-zone"
+         data-audio="audio/resist.mp3"
+         data-direction="horizontal"
+         data-horizontal="rl">
+      <div class="resist resist-1">resist</div>
+      <div class="resist resist-2">resist</div>
+      <div class="resist resist-3">resist</div>
+    </div>
+
+    <!-- LIED -->
+    <div id="lied-zone" class="sound-zone"
+         data-audio="audio/lied.mp3"
+         data-direction="horizontal"
+         data-horizontal="lr">
+      <div class="lied lied-1">lied</div>
+      <div class="lied lied-2">lied</div>
+      <div class="lied lied-3">lied</div>
+    </div>
+
+    <!-- THISRELIGION -->
+    <div id="thisreligion-zone" class="sound-zone"
+         data-audio="audio/thisreligion.mp3"
+         data-direction="horizontal"
+         data-horizontal="rl">
+      <div class="thisreligion thisreligion-1">thisreligion</div>
+      <div class="thisreligion thisreligion-2">thisreligion</div>
+      <div class="thisreligion thisreligion-3">thisreligion</div>
+    </div>
+
+    <!-- BRAINWASH -->
+    <div id="brainwash-zone" class="sound-zone"
+         data-audio="audio/brainwash.mp3"
+         data-direction="horizontal"
+         data-horizontal="lr">
+      <div class="brainwash brainwash-1">brainwash</div>
+      <div class="brainwash brainwash-2">brainwash</div>
+      <div class="brainwash brainwash-3">brainwash</div>
+    </div>
+
+    <!-- CHACHING -->
+    <div id="chaching-zone" class="sound-zone"
+         data-audio="audio/chaching.mp3"
+         data-volume="fixed">
+      <div class="chaching chaching-1">chaching</div>
+      <div class="chaching chaching-2">chaching</div>
+      <div class="chaching chaching-3">chaching</div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>

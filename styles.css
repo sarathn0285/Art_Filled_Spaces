@@ -1,0 +1,158 @@
+/* RESET */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* CONTAINER */
+#art-container {
+  position: relative;
+  width: 800px;
+}
+
+/* IMAGE */
+#art-container img {
+  width: 100%;
+  display: block;
+}
+
+/* ===== GLOBAL TEXT INVISIBILITY ===== */
+.the,
+.listening,
+.resist,
+.lied,
+.thisreligion,
+.brainwash,
+.chaching,
+.prayers {
+  opacity: 0;              /* 👈 words are invisible */
+  pointer-events: none;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* --- PRAYERS ZONE (TOP CENTER) --- */
+#prayers-zone {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 260px;
+}
+
+.prayers-1 { font-size: 48px; left: 90px; top: 90px; position: absolute; }
+.prayers-2 { font-size: 32px; left: 110px; top: 55px; position: absolute; }
+.prayers-3 { font-size: 20px; left: 130px; top: 25px; position: absolute; }
+
+/* --- THE ZONE --- */
+#the-zone {
+  position: absolute;
+  left: 0px;
+  top: 700px;
+  width: 220px;
+  height: 200px;
+}
+
+.the-1 { font-size: 96px; left: 0px; top: 150px; position: absolute; }
+.the-2 { font-size: 56px; left: 30px; top: 95px; position: absolute; }
+.the-3 { font-size: 32px; left: 60px; top: 60px; position: absolute; }
+
+/* --- LISTENING ZONE --- */
+#listening-zone {
+  position: absolute;
+  left: 70px;
+  top: 830px;
+  width: 600px;
+  height: 300px;
+}
+
+.listening-1 { font-size: 48px; left: 340px; top: 20px; position: absolute; }
+.listening-2 { font-size: 32px; left: 360px; top: 70px; position: absolute; }
+.listening-3 { font-size: 20px; left: 380px; top: 110px; position: absolute; }
+
+/* --- RESIST ZONE --- */
+#resist-zone {
+  position: absolute;
+  right: 0px;
+  top: 710px;
+  width: 220px;
+  height: 160px;
+}
+
+.resist-1 { font-size: 56px; left: 80px; top: 130px; position: absolute; }
+.resist-2 { font-size: 36px; left: 105px; top: 80px; position: absolute; }
+.resist-3 { font-size: 22px; left: 130px; top: 40px; position: absolute; }
+
+/* --- LIED ZONE --- */
+#lied-zone {
+  position: absolute;
+  right: 0px;
+  top: 460px;
+  width: 340px;
+  height: 200px;
+}
+
+.lied-1 { font-size: 54px; left: 60px; top: 95px; position: absolute; }
+.lied-2 { font-size: 34px; left: 85px; top: 55px; position: absolute; }
+.lied-3 { font-size: 20px; left: 110px; top: 25px; position: absolute; }
+
+/* --- THISRELIGION ZONE --- */
+#thisreligion-zone {
+  position: absolute;
+  left: 0px;
+  top: 480px;
+  width: 240px;
+  height: 200px;
+}
+
+.thisreligion-1 { font-size: 46px; left: 0px; top: 110px; position: absolute; }
+.thisreligion-2 { font-size: 30px; left: 30px; top: 65px; position: absolute; }
+.thisreligion-3 { font-size: 18px; left: 60px; top: 30px; position: absolute; }
+
+/* --- BRAINWASH ZONE --- */
+#brainwash-zone {
+  position: absolute;
+  left: 0px;
+  top: 180px;
+  width: 240px;
+  height: 200px;
+}
+
+.brainwash-1 { font-size: 44px; left: 0px; top: 110px; position: absolute; }
+.brainwash-2 { font-size: 28px; left: 30px; top: 65px; position: absolute; }
+.brainwash-3 { font-size: 16px; left: 60px; top: 30px; position: absolute; }
+
+/* --- CHACHING ZONE --- */
+#chaching-zone {
+  position: absolute;
+  right: 0px;
+  top: 180px;
+  width: 240px;
+  height: 200px;
+}
+
+.chaching-1 { font-size: 44px; left: 60px; top: 110px; position: absolute; }
+.chaching-2 { font-size: 28px; left: 90px; top: 65px; position: absolute; }
+.chaching-3 { font-size: 16px; left: 120px; top: 30px; position: absolute; }
+
+/* INTERACTION HINT (below image, subtle but readable) */
+#interaction-hint {
+  position: relative;
+  margin: 12px auto 0 auto;
+  width: fit-content;
+  padding: 6px 12px;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.6);
+
+  border-radius: 4px;
+
+  pointer-events: none;
+  user-select: none;
+}
+
